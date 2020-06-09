@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Exists;
+use LaraDev\Property;
 
 
 class PropertyController extends Controller
@@ -13,15 +14,15 @@ class PropertyController extends Controller
   public function index()
   {
 
-    $properties = DB::select('select * from properties');
-
+    //$properties = DB::select('select * from properties');
+    $properties = property::all();
     return view('property/index')->with('properties', $properties);
   }
   public function show($name)
   {
 
-    $property = DB::select("select * from  properties where name=?", [$name]);
-
+    //$property = DB::select("select * from  properties where name=?", [$name]);
+    $property = Property::where('name', $name)->get();
     if (!empty($property)) {
       return view('property/show')->with('property', $property);
     } else {
@@ -38,7 +39,7 @@ class PropertyController extends Controller
   {
     $propertySlug = $this->setName($request->title);
 
-    $property = [
+    /*$property = [
       $request->title,
       $propertySlug,
       $request->description,
@@ -47,13 +48,22 @@ class PropertyController extends Controller
     ];
 
     DB::insert("insert into properties (title, name, description, rental_price, sale_price)
-        values (?, ?, ?, ?, ?)", $property);
+        values (?, ?, ?, ?, ?)", $property);*/
+    $property = [
+      'title' => $request->title,
+      'name' => $request->name,
+      'description' => $request->description,
+      'rental_price' => $request->rental_price,
+      'sale_price' => $request->sale_price
+    ];
+    Property::create($property);
 
     return redirect()->action('PropertyController@index');
   }
   public function edit($name)
   {
-    $property = DB::select("select * from  properties where name=?", [$name]);
+    //$property = DB::select("select * from  properties where name=?", [$name]);
+    $property = Property::where('name', $name)->get();
 
     if (!empty($property)) {
       return view('property/edit')->with('property', $property);
@@ -66,7 +76,7 @@ class PropertyController extends Controller
 
     $propertySlug = $this->setName($request->title);
 
-    $property = [
+    /*$property = [
       $request->title,
       $propertySlug,
       $request->description,
@@ -76,28 +86,38 @@ class PropertyController extends Controller
     ];
 
     DB::update("update properties set title = ? ,name= ?, description = ?, rental_price = ?, 
-    sale_price = ? WHERE id =? ", $property);
+    sale_price = ? WHERE id =? ", $property);*/
+    $property =  Property::find($id);
 
+    $property->title = $request->title;
+    $property->name = $propertySlug;
+    $property->description = $request->description;
+    $property->rental_price = $request->rental_price;
+    $property->sale_price = $request->sale_price;
+
+    $property->save();
     return redirect()->action('PropertyController@index');
   }
   public function destroy($name)
   {
-  
-    $property = DB::select("select * from  properties where name=?", [$name]);
-     
 
-  if (!empty($property)) {
-    DB::delete( "delete  from  properties where name=?", [$name]);
-   }
+    //$property = DB::select("select * from  properties where name=?", [$name]);
+    $property = Property::where('name', $name)->get();
 
-  return redirect()->action('PropertyController@index');
+
+    if (!empty($property)) {
+      DB::delete("delete  from  properties where name=?", [$name]);
+    }
+
+    return redirect()->action('PropertyController@index');
   }
 
   private function setName($title)
   {
     $propertySlug = Str::slug($title);
 
-    $properties = DB::select("select * from properties");
+    // $properties = DB::select("select * from properties");
+    $properties = Property::all();
 
     $i = 0;
     foreach ($properties as $property) {
