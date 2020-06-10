@@ -1,3 +1,7 @@
+@extends('property.master')
+
+@section('content')
+
 <h1>Página Single</h1>
 
 <?php
@@ -12,5 +16,8 @@ if (!empty($property)) {
 
     <p>Valor de Venda: R$ <?= number_format($prop->sale_price, 2, ',', '.'); ?></p>
 <?php
+
   }
 }
+?>
+@endsection

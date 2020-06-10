@@ -1,3 +1,7 @@
+@extends('property.master')
+
+@section('content')
+
 <h1> Formulario de Edição:: Imoveis</h1>
 <?php 
 $property= $property[0];
@@ -32,3 +36,4 @@ $property= $property[0];
 <button type="submit">Editar Imóvel</button>
 
 </form>
+@endsection

@@ -16,7 +16,7 @@ class PropertyController extends Controller
 
     //$properties = DB::select('select * from properties');
     $properties = property::all();
-    return view('property/index')->with('properties', $properties);
+    return view('property.index')->with('properties', $properties);
   }
   public function show($name)
   {
