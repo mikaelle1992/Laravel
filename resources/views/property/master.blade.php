@@ -10,9 +10,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
-
-    <p><a href="<?= url('/imoveis'); ?>">Listar todos os imoveis</a> | <a href="<?= url('/imoveis/novo'); ?>">Cadastrar novo imóvel</a></p>
-
+<nav class=" navbar navbar-expand-lg navbar-dark bg-info">
+       <div class="container">
+           <a href="#" class="navbar-brand">Lara<b>Dev</b></a>
+           <ul class="navbar-nav ml-auto">
+               <li class="nav-item"><a href="<?= url('/imoveis'); ?>" class="nav-link">Listar todos os imoveis</a></li>
+               <li class="nav-item"><a href="<?= url('/imoveis/novo'); ?>"class="nav-link">Cadastrar novo imóvel</a></li>
+           </ul>
+       </div>
+   </nav>
  @yield('content') 
  
  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

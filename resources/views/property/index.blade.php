@@ -1,23 +1,24 @@
 @extends('property.master')
 
 @section('content')
-
+<div class="container my-3">
     
 
-<h1>listagem de Produtos</h1>
+<h1>Listagem de Produtos</h1>
 
 
 <?php
 
 if (!empty($properties)) {
 
-    echo "<table>";
+    echo "<table class='table table-striped table-hover'>";
 
-    echo "<tr>
+    echo "<thead class='bg-primary text-white'>
     <td> Titulo </td>
     <td>Valor da Locação </td>
-    <td>Valor da Compra </td>          
-    </tr>";
+    <td>Valor da Compra </td>   
+    <td>Ações</td>        
+    </thead>";
 
     foreach ($properties as $property) {
         $linkReadMode = url('/imoveis/' . $property->name);
@@ -35,4 +36,5 @@ if (!empty($properties)) {
     echo "</table>";
 }
 ?>
+</div>
 @endsection
